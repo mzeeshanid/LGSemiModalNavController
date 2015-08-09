@@ -46,9 +46,9 @@
     toViewController.view.userInteractionEnabled = NO;
     
     if (self.presenting) {
-        UIImage* image =  [self viewAsImage:fromViewController.view];
-        [transitionContext.containerView insertSubview:[[UIImageView alloc] initWithImage:image] atIndex:0];
-        fromViewController.view.hidden = YES;
+        //        UIImage* image =  [self viewAsImage:fromViewController.view];
+        //        [transitionContext.containerView insertSubview:[[UIImageView alloc] initWithImage:image] atIndex:0];
+        //        fromViewController.view.hidden = YES;
         
         [transitionContext.containerView insertSubview:backgroundView belowSubview:toViewController.view];
         
@@ -61,7 +61,8 @@
         [UIView animateWithDuration:[self transitionDuration:transitionContext]
                          animations:^{
                              backgroundView.alpha = _backgroundShadeAlpha;
-                            [(UIView*)[transitionContext.containerView.subviews objectAtIndex:0] setTransform:_scaleTransform];
+                             [(UIView*)[transitionContext.containerView.subviews objectAtIndex:0] setTransform:_scaleTransform];
+                             [fromViewController.view setTransform:_scaleTransform];
                          }
                          completion:^(BOOL finished) {
                              
@@ -85,6 +86,7 @@
         [UIView animateWithDuration:[self transitionDuration:transitionContext]
                          animations:^{
                              [(UIView*)[transitionContext.containerView.subviews objectAtIndex:0] setTransform:CGAffineTransformMakeScale(1, 1)];
+                             [toViewController.view setTransform:transitionContext.containerView.transform];
                              fromViewController.view.frame = modalViewInitialFrame;
                              backgroundView.alpha = 0;
                          }
